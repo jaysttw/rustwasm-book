@@ -35,6 +35,33 @@ pub struct Universe {
 }
 
 impl Universe {
+    fn get_index(&self, row: u32, column: u32) -> usize {
+        (row * self.width + column) as usize
+    }
+
+    fn live_neighbor_count(&self, row: u32, column: u32) -> u8 {
+        // self.height and self.width are added to prevent the check from
+        // going <0.
+
+        let mut count: u8 = 0;
+        for delta_row in [self.height - 1, 0, 1].iter().cloned() {
+            for delta_col in [self.width - 1, 0, 1].iter().cloned() {
+                if delta_row == 0 && delta_col == 0 {
+                    continue;
+                }
+
+                let neighbor_row: u32 = (row + delta_row) % self.height;
+                let neighbor_col: u32 = (column + delta_col) % self.width;
+                let idx: usize = self.get_index(neighbor_row, neighbor_col);
+                count += self.cells[idx] as u8;
+            }
+        }
+        count
+    }
+}
+
+#[wasm_bindgen]
+impl Universe {
     pub fn new() -> Universe {
         let width: u32 = 64;
         let height: u32 = 64;
@@ -91,27 +118,6 @@ impl Universe {
         }
 
         self.cells = next;
-    }
-
-    fn get_index(&self, row: u32, column: u32) -> usize {
-        (row * self.width + column) as usize
-    }
-
-    fn live_neighbor_count(&self, row: u32, column: u32) -> u8 {
-        let mut count: u8 = 0;
-        for delta_row in [self.height - 1, 0, 1].iter().cloned() {
-            for delta_col in [self.width - 1, 0, 1].iter().cloned() {
-                if delta_row == 0 && delta_col == 0 {
-                    continue;
-                }
-
-                let neighbor_row: u32 = (row + delta_row) % self.height;
-                let neighbor_col: u32 = (column + delta_col) % self.width;
-                let idx: usize = self.get_index(neighbor_row, neighbor_col);
-                count += self.cells[idx] as u8;
-            }
-        }
-        count
     }
 }
 
