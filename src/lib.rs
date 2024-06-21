@@ -62,6 +62,14 @@ impl Universe {
 
 #[wasm_bindgen]
 impl Universe {
+    pub fn cells(&self) -> *const Cell {
+        self.cells.as_ptr()
+    }
+
+    pub fn height(&self) -> u32 {
+        self.height
+    }
+    
     pub fn new() -> Universe {
         let width: u32 = 64;
         let height: u32 = 64;
@@ -118,6 +126,10 @@ impl Universe {
         }
 
         self.cells = next;
+    }
+
+    pub fn width(&self) -> u32 {
+        self.width
     }
 }
 
