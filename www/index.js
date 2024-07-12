@@ -1,7 +1,7 @@
 // Based off the Canvas API
 // https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API
 import { Universe, Cell } from "wasm-game-of-life";
-import { memory } from "wasm-game-of-life/wasm_game_of_life_bg.wasm";
+import { memory } from "wasm-game-of-life/wasm_game_of_life_bg.wasm"; // https://github.com/rustwasm/book/issues/313
 
 const CELL_SIZE = 5; // px
 const GRID_COLOR = "#CCCCCC";
