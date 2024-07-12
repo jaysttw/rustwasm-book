@@ -157,7 +157,7 @@ impl fmt::Display for Universe {
         for line in self.cells.as_slice().chunks(self.width as usize) {
             for &cell in line {
                 // let symbol = if cell == Cell::Dead { '◻' } else { '◼' };
-                let symbol = if cell == false { '◻' } else { '◼' };
+                let symbol = if cell == false as usize { '◻' } else { '◼' };
                 write!(f, "{}", symbol)?;
             }
             write!(f, "\n")?;
