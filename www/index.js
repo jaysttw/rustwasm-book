@@ -26,7 +26,8 @@ const ctx = canvas.getContext('2d');
 
 const drawCells = () => {
   const cellsPtr = universe.cells();
-  const cells = new Uint8Array(memory.buffer, cellsPtr, width * height);
+  // const cells = new Uint8Array(memory.buffer, cellsPtr, width * height);
+  const cells = new Uint8Array(memory.buffer, cellsPtr, width * height / 8);
 
   ctx.beginPath();
 
@@ -34,7 +35,7 @@ const drawCells = () => {
     for (let col = 0; col < width; col++) {
       const idx = getIndex(row, col);
 
-      ctx.fillStyle = cells[idx] === Cell.Dead
+      ctx.fillStyle = cells[idx] === bitIsSet(idx, cells)
         ? DEAD_COLOR
         : ALIVE_COLOR;
 
